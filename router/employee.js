@@ -75,7 +75,7 @@ router
 
     let { username } = req.session
     const data = await getEmployeeData(username)
-    res.render('updateEmployee', { data: data })
+    res.render('UpdateEmployee', { data: data })
 
   })
   .post(async (req, res) => {
