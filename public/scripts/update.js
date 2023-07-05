@@ -7,6 +7,14 @@ function test() {
   }
 }
 
+function todayDate() {
+  let date = new Date();
+  let today = date.toISOString().split("T")[0];
+  document.getElementById("find_task").max = today;
+}
+
+document.getElementById('find_task') === null ? false : todayDate()
+
 function update(e)
 {
   let val = e.substring(1);

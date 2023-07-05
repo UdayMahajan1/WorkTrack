@@ -31,7 +31,9 @@ app
 })
 .post(async (req, res) => {
   var { username, password, role } = req.body
+  // console.log(req.body)
   const result = await authenticate(username, password, role)
+  // console.log(result)
   if (result) {
     req.session.username = username
     req.session.role = role

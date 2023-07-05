@@ -27,7 +27,7 @@ router
             throw err;
           }
           else {
-            res.render('AdminDashboard', { data: data, data1: data1 });
+            res.render('AdminDashboard', { username: req.session.username, data: data, data1: data1 });
           }
         });
       }

@@ -13,13 +13,6 @@ const {
   deleteTasks
 } = require('../database')
 
-// const conn = mysql.createConnection({
-//   host: process.env.MYSQL_URI,
-//   user: process.env.MYSQL_USER,
-//   password: process.env.MYSQL_PASSWORD,
-//   database: process.env.MYSQL_USER
-// });
-
 router.use(empAuth)
 
 router
@@ -35,8 +28,9 @@ router
         task.date = new Date(task.date) 
       });
     }
-    console.log(req.session.visited)
+    // console.log(req.session.visited)
     res.render('EmployeeDashboard', {
+      username: username, 
       data: data ? data : {},
       data1: workData,
       data2: breakData,
@@ -59,6 +53,7 @@ router
       req.session.visited = false
       req.session.prevData = tasks
       res.render('EmployeeDashboard', {
+        username: username,
         data: data ? data : {},
         data1: workData,
         data2: breakData,
@@ -84,7 +79,7 @@ router
       data: req.body,
       prevUsername: req.session.username
     }
-
+    console.log(req.body)
     await updateEmployeeData(updatedData)
     req.session.username = req.body.username
     console.log(req.session.username)

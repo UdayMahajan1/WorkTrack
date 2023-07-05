@@ -1,6 +1,6 @@
+const dotenv = require('dotenv')
 require('dotenv').config()
 const mysql = require('mysql2')
-const dotenv = require('dotenv')
 const moment = require('moment')
 
 const pool = mysql.createPool({
@@ -13,7 +13,7 @@ const pool = mysql.createPool({
 const authenticate = async (username, password, role) => {
     if (role === 'Admin') {
         try {
-            const [data] = await pool.query(`SELECT * FROM admin_info WHERE username = ? AND password = ?`, [username, password])
+            const [data] = await pool.query(`SELECT * FROM admin_info WHERE BINARY username = ? AND BINARY password = ?`, [username, password])
 
 
             if (data.length > 0) return true // user found
@@ -25,9 +25,10 @@ const authenticate = async (username, password, role) => {
         }
     } else {
         try {
-            const [data] = await pool.query(`SELECT * FROM employee_info WHERE username = ? AND password = ?`, [username, password])
+            // console.log(username)
+            const [data] = await pool.query(`SELECT * FROM employee_info WHERE BINARY username = ? AND BINARY password = ?`, [username, password])
 
-
+            // console.log(data)
             if (data.length > 0) return true // user found
             else return false // user not found
 

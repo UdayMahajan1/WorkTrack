@@ -10,45 +10,117 @@
     <script src="/scripts/update.js" type="text/javascript" defer></script>
 </head>
 
+<style>
+    body {
+        background-color: #E3F3FC;
+    }
+</style>
+
 <body>
-    <form action="/employee/updateEmployee" method="post">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" value="<%= data[0].email %>" id="email" name="email"
-                readonly="readonly" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">You cannot update!</div>
-        </div>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" name="username" class="form-control" value="<%= data[0].username %>" id="username"
-                aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-            <label for="contact" class="form-label">Contact</label>
-            <input type="number" name="contact" class="form-control" value="<%= data[0].contact %>" id="contact"
-                aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-            <label for="dept" class="form-label">Department</label>
-            <input type="text" name="department" class="form-control" value="<%= data[0].dept %>" id="department">
-        </div>
-        <div class="mb-3">
-            <label for="join_date" class="form-label">Join Date</label>
-            <input readonly="readonly" type="text" name="date" class="form-control"
-                value="<%= data[0].join_date.toString().substring(0,15) %>" id="join_date">
-        </div>
-        <div class="mb-3 form-check">
-            <input onclick="test()" name="checkval" type="checkbox" class="form-check-input" id="pass-check">
-            <label class="form-check-label" for="exampleCheck1">Change password</label>
-        </div>
-        <div style="display: none;" id="pass-box">
-            <div class="mb-3">
-                <label for="new_password" class="form-label">New Password</label>
-                <input type="password" class="form-control" id="new_password" name="new_password">
+
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+              <div class="card-body p-4 p-sm-5">
+                <h5 class="card-title text-center mb-5 fw-strong fs-5">
+                  Update Profile
+                </h5>
+                  <form action="/employee/updateEmployee" method="post">
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email address</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        value="<%= data[0].email %>"
+                        id="email"
+                        name="email"
+                        readonly="readonly"
+                        aria-describedby="emailHelp"
+                      />
+                      <div id="emailHelp" class="form-text">
+                        You cannot update!
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        value="<%= data[0].username %>"
+                        id="username"
+                        aria-describedby="emailHelp"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="contact" class="form-label">Contact</label>
+                      <input
+                        type="number"
+                        name="contact"
+                        class="form-control"
+                        value="<%= data[0].contact %>"
+                        id="contact"
+                        aria-describedby="emailHelp"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="dept" class="form-label">Department</label>
+                      <input
+                        type="text"
+                        name="department"
+                        class="form-control"
+                        value="<%= data[0].dept %>"
+                        id="department"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="join_date" class="form-label">Join Date</label>
+                      <input
+                        readonly="readonly"
+                        type="text"
+                        name="date"
+                        class="form-control"
+                        value="<%= data[0].join_date.toString().substring(0,15) %>"
+                        id="join_date"
+                      />
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input
+                        onclick="test()"
+                        name="checkval"
+                        type="checkbox"
+                        class="form-check-input"
+                        id="pass-check"
+                      />
+                      <label class="form-check-label" for="exampleCheck1"
+                        >Change password</label
+                      >
+                    </div>
+                    <div style="display: none;" id="pass-box">
+                      <div class="mb-3">
+                        <label for="new_password" class="form-label"
+                          >New Password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="new_password"
+                          name="new_password"
+                        />
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <button type="submit" class="btn btn-primary mt-4 col-3">
+                        Update
+                      </button>
+                    </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+      </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"

@@ -13,13 +13,31 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#exampleModal">
-            Add Task
-        </button>
-        <a href="/employee/updateEmployee" class="btn btn-secondary m-2">Update Profile</a>
-        <a href="/employee/logout" class="btn btn-danger m-2">Logout</a>
-    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #e3f2fd;">
+        <div class="container-fluid row justify-content-between">
+            <div class="col-3">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Add Task
+                </button>
+                <button id="1000" type="button" class="btn btn-success" data-toggle="modal"
+                    data-target=".bd-example-modal-lg1000">
+                    View Stats
+                </button>
+                <a href="/employee/updateEmployee" class="btn btn-secondary">Update Profile</a>
+            </div>
+            <div class="col-6 text-center">
+                <h2>
+                    Hello <%= username %> !
+                </h2>
+            </div>
+            <div class="col-3 row justify-content-end">
+                <a href="/employee/logout" class="btn btn-danger col-3">
+                    Logout
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -56,18 +74,15 @@
                             <input id="time_taken" name="time_taken" type="text" class="form-control"
                                 placeholder="Enter time taken">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-outline-primary">Submit</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <button id="1000" type="submit" class="btn btn-primary" data-toggle="modal"
-        data-target=".bd-example-modal-lg1000">View Graph</button>
 
     <div class="modal fade bd-example-modal-lg1000" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel1"
         aria-hidden="true">
@@ -86,101 +101,118 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Task Description</th>
-                <th scope="col">Type of Work</th>
-                <th scope="col">Start Time</th>
-                <th scope="col">Time Taken</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <% let j=0; if(data.length>0)
-                {
-                data.forEach(function(item){
-                j++;
-                %>
-                <tr>
-                    <th scope="row">
-                        <%= j %>
-                    </th>
-                    <td id="desc<%=j%>">
-                        <%= item.task_description %>
-                    </td>
-                    <td id="type<%=j%>">
-                        <%= item.task_type %>
-                    </td>
-                    <td id="st_time<%=j%>">
-                        <%= item.start_time %>
-                    </td>
-                    <td id="time<%=j%>">
-                        <%= item.time_taken %>
-                    </td>
-                    <td>
-                        <button onclick="update(this.id)" id="u<%=j%>" type="submit" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg<%=j%>">Update</button>
+    <div class="text-center my-5">
+        <h3>
+            <% if(data.length> 0) { %>
+                Today's Tasks
+                <% } else {%>
+                    No tasks today
+                    <% } %>
+        </h3>
+    </div>
 
-                        <div class="modal fade bd-example-modal-lg<%=j%>" tabindex="-1" role="dialog"
-                            aria-labelledby="myLargeModalLabel1" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="myLargeModalLabel">Update Task</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">x</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="/employee/updateTask" method="post">
-                                            <div class="form-group">
-                                                <label>Task Description:</label>
-                                                <input type="text" class="form-control" id="udesc<%=j%>" name="udesc">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputState">Task Type:</label>
-                                                <select name="utype" id="utype<%=j%>" class="form-control">
-                                                    <option selected>Choose...</option>
-                                                    <option>Break</option>
-                                                    <option>Work</option>
-                                                    <option>Meeting</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Start Time:</label>
-                                                <input id="ust_time<%=j%>" name="ust_time" type="time"
-                                                    class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>Time taken(in mins):</label>
-                                                <input id="utime_taken<%=j%>" name="utime_taken" type="text"
-                                                    class="form-control">
-                                            </div>
-                                            <div style="display: none;" class="form-group">
-                                                <input type="text" class="form-control" id="prevSt_time<%=j%>"
-                                                    name="prevSt_time">
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Edit</button>
-                                        </form>
+    <div class="container-fluid">
+        <table class="table">
+            <thead>
+                <tr class="table-primary">
+                    <% if(data.length> 0) { %>
+                        <th scope="col">#</th>
+                        <th scope="col">Task Description</th>
+                        <th scope="col">Type of Work</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">Time Taken</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <% } else {%>
+                            <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% let j=0; if(data.length>0)
+                    {
+                    data.forEach(function(item){
+                    j++;
+                    %>
+                    <tr class="table-light">
+                        <th scope="row">
+                            <%= j %>
+                        </th>
+                        <td id="desc<%=j%>">
+                            <%= item.task_description %>
+                        </td>
+                        <td id="type<%=j%>">
+                            <%= item.task_type %>
+                        </td>
+                        <td id="st_time<%=j%>">
+                            <%= item.start_time %>
+                        </td>
+                        <td id="time<%=j%>">
+                            <%= item.time_taken %>
+                        </td>
+                        <td>
+                            <button onclick="update(this.id)" id="u<%=j%>" type="submit" class="btn btn-outline-primary"
+                                data-toggle="modal" data-target=".bd-example-modal-lg<%=j%>">Update</button>
+
+                            <div class="modal fade bd-example-modal-lg<%=j%>" tabindex="-1" role="dialog"
+                                aria-labelledby="myLargeModalLabel1" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myLargeModalLabel">Update Task</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">x</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/employee/updateTask" method="post">
+                                                <div class="form-group">
+                                                    <label>Task Description:</label>
+                                                    <input type="text" class="form-control" id="udesc<%=j%>"
+                                                        name="udesc">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputState">Task Type:</label>
+                                                    <select name="utype" id="utype<%=j%>" class="form-control">
+                                                        <option selected>Choose...</option>
+                                                        <option>Break</option>
+                                                        <option>Work</option>
+                                                        <option>Meeting</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Start Time:</label>
+                                                    <input id="ust_time<%=j%>" name="ust_time" type="time"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Time taken(in mins):</label>
+                                                    <input id="utime_taken<%=j%>" name="utime_taken" type="text"
+                                                        class="form-control">
+                                                </div>
+                                                <div style="display: none;" class="form-group">
+                                                    <input type="text" class="form-control" id="prevSt_time<%=j%>"
+                                                        name="prevSt_time">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <button onclick="remove(this.id)" id="d<%=j%>" type="submit"
-                            class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-                <% }) }else{ %>
-                    <tr>
-                        <td colspan="5">No data found</td>
+                        </td>
+                        <td>
+                            <button onclick="remove(this.id)" id="d<%=j%>" type="submit"
+                                class="btn btn-outline-danger">Delete</button>
+                        </td>
                     </tr>
-                    <% } %>
-        </tbody>
-    </table>
+                    <% }) }else{ %>
+                        <tr>
+                        </tr>
+                        <% } %>
+            </tbody>
+        </table>
+    </div>
+
     <div style="display: none;">
         <form id="deleteForm" action="/employee/deleteTask" method="post">
             <input type="text" id="ddesc" name="desc" />
@@ -194,140 +226,146 @@
         <form action="/employee/dashboard" method="post">
             <div class="form-group row justify-content-center">
                 <div class="col-1 justify-content-center">
-                    <p class="fs-2 mt-2">Date :</p>
+                    <p class="text-md mt-2"><strong>Date :</strong></p>
                 </div>
-                <input id="find_task" name="find_task_date" type="date" class="form-control col-5">
-                <button type="submit" class="btn btn-info col-2 ml-2">View previous tasks</button>
+                <input id="find_task" name="find_task_date" type="date" class="form-control col-2" max=''>
+                <button type="submit" class="btn btn-info col-auto ml-2">View previous tasks</button>
             </div>
         </form>
     </div>
 
     <div class="text-center m-3 p-3">
         <% if(tasks.length>0) { %>
-            <h2>
+            <h3>
                 Tasks on <%= tasks[0].date.toDateString() %>
-            </h2>
-            <% } else if (visited === true) { %>
-                <h2>No tasks on this date.</h2>
+            </h3>
+            <% } else if (visited===true) { %>
+                <h3>No tasks on this date.</h3>
                 <% } else {%>
-                <h2></h2>
-                <% } %>
+                    <h2></h2>
+                    <% } %>
     </div>
-    <table class="table">
-        <% if(tasks.length>0) { %>
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Task Description</th>
-                    <th scope="col">Type of Work</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">Time Taken</th>
-                    <th scope="col">Date</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <% } else { %>
+
+    <div class="container-fluid">
+        <table class="table">
+            <% if(tasks.length>0) { %>
                 <thead>
-                    <tr></tr>
+                    <tr class="table-primary">
+                        <th scope="col">#</th>
+                        <th scope="col">Task Description</th>
+                        <th scope="col">Type of Work</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">Time Taken</th>
+                        <th scope="col">Date</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
                 </thead>
-                <% } %>
-                    <tbody>
-                        <% let i=0; if(tasks.length>0)
-                            {
-                            tasks.forEach(function(task){
-                            i++;
-                            %>
-                            <tr>
-                                <th scope="row">
-                                    <%= i %>
-                                </th>
-                                <td id="prevDesc-<%=i%>">
-                                    <%= task.task_description %>
-                                </td>
-                                <td id="prevType-<%=i%>">
-                                    <%= task.task_type %>
-                                </td>
-                                <td id="prevSt_time-<%=i%>">
-                                    <%= task.start_time %>
-                                </td>
-                                <td id="prevTime-<%=i%>">
-                                    <%= task.time_taken %>
-                                </td>
-                                <td id="prevDate-<%=i%>">
-                                    <%= task.date.toDateString() %>
-                                </td>
-                                <td>
+                <% } else { %>
+                    <thead>
+                        <tr></tr>
+                    </thead>
+                    <% } %>
+                        <tbody>
+                            <% let i=0; if(tasks.length>0)
+                                {
+                                tasks.forEach(function(task){
+                                i++;
+                                %>
+                                <tr class="table-light">
+                                    <th scope="row">
+                                        <%= i %>
+                                    </th>
+                                    <td id="prevDesc-<%=i%>">
+                                        <%= task.task_description %>
+                                    </td>
+                                    <td id="prevType-<%=i%>">
+                                        <%= task.task_type %>
+                                    </td>
+                                    <td id="prevSt_time-<%=i%>">
+                                        <%= task.start_time %>
+                                    </td>
+                                    <td id="prevTime-<%=i%>">
+                                        <%= task.time_taken %>
+                                    </td>
+                                    <td id="prevDate-<%=i%>">
+                                        <%= task.date.toDateString() %>
+                                    </td>
+                                    <td>
 
-                                    <button onclick="edit(this.id)" id="<%=i%>" type="submit" class="btn btn-primary"
-                                        data-toggle="modal" data-target=".prevDescModal<%=i%>">Update</button>
+                                        <button onclick="edit(this.id)" id="<%=i%>" type="submit"
+                                            class="btn btn-outline-primary" data-toggle="modal"
+                                            data-target=".prevDescModal<%=i%>">Update</button>
 
-                                    <div class="modal fade prevDescModal<%=i%>" tabindex="-1" role="dialog"
-                                        aria-labelledby="myLargeModalLabel1" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="myLargeModalLabel">Update Task</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">x</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="/employee/updateTask" method="post">
-                                                        <div class="form-group">
-                                                            <label>Task Description:</label>
-                                                            <input type="text" class="form-control"
-                                                                id="modalVisiblePrevDesc-<%=i%>" name="newPrevDesc">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="inputState">Task Type:</label>
-                                                            <select name="prevType" id="modalPrevType-<%=i%>"
-                                                                class="form-control">
-                                                                <option selected>Choose...</option>
-                                                                <option>Break</option>
-                                                                <option>Work</option>
-                                                                <option>Meeting</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Start Time:</label>
-                                                            <input id="modalNewPrevSt_time-<%=i%>" name="newPrevSt_time"
-                                                                type="time" class="form-control">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Time taken(in mins):</label>
-                                                            <input id="modalPrevTime-<%=i%>" name="prevTime" type="text"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div style="display: none;" class="form-group">
-                                                            <input id="modalPrevDate-<%=i%>" name="prevDate" type="text"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div style="display: none;" class="form-group">
-                                                            <input type="text" class="form-control"
-                                                                id="modalOldPrevSt_time-<%=i%>" name="oldPrevSt_time">
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary">Edit</button>
-                                                    </form>
+                                        <div class="modal fade prevDescModal<%=i%>" tabindex="-1" role="dialog"
+                                            aria-labelledby="myLargeModalLabel1" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myLargeModalLabel">Update Task</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">x</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="/employee/updateTask" method="post">
+                                                            <div class="form-group">
+                                                                <label>Task Description:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="modalVisiblePrevDesc-<%=i%>" name="newPrevDesc">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputState">Task Type:</label>
+                                                                <select name="prevType" id="modalPrevType-<%=i%>"
+                                                                    class="form-control">
+                                                                    <option selected>Choose...</option>
+                                                                    <option>Break</option>
+                                                                    <option>Work</option>
+                                                                    <option>Meeting</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Start Time:</label>
+                                                                <input id="modalNewPrevSt_time-<%=i%>"
+                                                                    name="newPrevSt_time" type="time"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Time taken(in mins):</label>
+                                                                <input id="modalPrevTime-<%=i%>" name="prevTime"
+                                                                    type="text" class="form-control">
+                                                            </div>
+                                                            <div style="display: none;" class="form-group">
+                                                                <input id="modalPrevDate-<%=i%>" name="prevDate"
+                                                                    type="text" class="form-control">
+                                                            </div>
+                                                            <div style="display: none;" class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    id="modalOldPrevSt_time-<%=i%>"
+                                                                    name="oldPrevSt_time">
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Edit</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
 
-                                <td>
-                                    <button onclick="del(this.id)" id="<%=i%>" type="submit"
-                                        class="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <% }) }else{ %>
-                                <tr>
-                                    <td colspan="5"></td>
+                                    <td>
+                                        <button onclick="del(this.id)" id="<%=i%>" type="submit"
+                                            class="btn btn-outline-danger">Delete</button>
+                                    </td>
                                 </tr>
-                                <% } %>
-                    </tbody>
-    </table>
+                                <% }) }else{ %>
+                                    <tr>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                    <% } %>
+                        </tbody>
+        </table>
+    </div>
 
     <div style="display: none;">
         <form id="deletePrevData" action="/employee/deleteTask" method="post">
@@ -343,24 +381,24 @@
         <% let work=0; let meeting=0; let brk=0; if (true) { %>
             <% data1.forEach(function(data) { %>
                 <% work +=data.time_taken; %>
-            <% }); %>
-            <% data2.forEach(function(data) { %>
-                <% meeting +=data.time_taken; %>
-            <% }); %>
-            <% data3.forEach(function(data) { %>
-                <% brk +=data.time_taken; %>
-            <% }); %>
-        <%} else { %>
-        <% } %>
-        <p id="work">
-            <%=work %>
-        </p>
-        <p id="meeting">
-            <%=meeting %>
-        </p>
-        <p id="break">
-            <%=brk %>
-        </p>
+                    <% }); %>
+                        <% data2.forEach(function(data) { %>
+                            <% meeting +=data.time_taken; %>
+                                <% }); %>
+                                    <% data3.forEach(function(data) { %>
+                                        <% brk +=data.time_taken; %>
+                                            <% }); %>
+                                                <%} else { %>
+                                                    <% } %>
+                                                        <p id="work">
+                                                            <%=work %>
+                                                        </p>
+                                                        <p id="meeting">
+                                                            <%=meeting %>
+                                                        </p>
+                                                        <p id="break">
+                                                            <%=brk %>
+                                                        </p>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
