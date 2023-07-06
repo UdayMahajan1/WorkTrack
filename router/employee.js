@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql2')
 const empAuth = require('./empAuth')
+const moment = require('moment')
 const {
   getEmployeeTasks,
   getCurrentDayTasks,
@@ -23,7 +24,6 @@ router
     const { workData, breakData, meetingData } = await getCurrentDayChartData(username)
     let tasks = req.session.prevData //req.flash('data')
     // console.log(tasks)
-    console.log(tasks)
     if(tasks !== null && tasks !== undefined  && tasks.length > 0) {
       tasks.forEach(task => {
         task.date = new Date(task.date) 
@@ -92,6 +92,9 @@ router
   .post(async (req, res) => {
 
     let timedate = req.body.st_time
+    let currDate = new Date()
+    currDate = moment(currDate).format('YYYY-MM-DD')
+    // console.log(currDate, date)
 
     let data = {
       username: req.session.username,
@@ -103,6 +106,12 @@ router
     }
 
     await setEmployeeTasks(data)
+
+    if(data.date !== currDate) {
+      let prevData = await getEmployeeTasks(data.date, data.username)
+      // console.log(prevData)
+      req.session.prevData = prevData
+    } // req.flash('data', prevData)
 
     res.redirect('/employee/dashboard');
   });

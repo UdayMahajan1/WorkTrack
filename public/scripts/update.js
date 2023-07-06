@@ -9,6 +9,7 @@ function test() {
 
 function todayDate() {
   let date = new Date();
+  date.setDate(date.getDate() - 1);
   let today = date.toISOString().split("T")[0];
   document.getElementById("find_task").max = today;
 }
