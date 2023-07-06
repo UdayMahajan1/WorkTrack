@@ -208,6 +208,10 @@ const deleteTasks = async (deleteData) => {
 
             await pool.execute(`DELETE FROM tasks WHERE username = ? AND task_description = ? AND task_type = ? AND start_time = ? AND time_taken = ? AND date = ?`, [username, desc, type, st_time, time, date])
 
+            const data = await getEmployeeTasks(date, username)
+
+            return data
+
         }
 
         console.log('Task deleted')

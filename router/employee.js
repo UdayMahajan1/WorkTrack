@@ -114,7 +114,12 @@ router
       data: req.body,
       username: req.session.username
     }
-    await deleteTasks(deleteData)
+    let data = await deleteTasks(deleteData)
+
+    if(deleteData.data.date !== undefined) { 
+      req.session.prevData = data
+    }// req.flash('data', data)
+
     res.redirect('/employee/dashboard');
   });
 
