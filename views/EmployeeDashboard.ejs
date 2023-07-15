@@ -53,7 +53,7 @@
                     <form action="/employee/addTask" method="post">
                         <div class="form-group">
                             <label>Task Description:</label>
-                            <input type="text" class="form-control" id="desc" name="desc"
+                            <input autocomplete="off" type="text" class="form-control" id="desc" name="desc"
                                 placeholder="Enter task description">
                         </div>
                         <div class="form-group">
@@ -71,7 +71,7 @@
                         </div>
                         <div class="form-group">
                             <label>Time taken(in mins):</label>
-                            <input id="time_taken" name="time_taken" type="text" class="form-control"
+                            <input autocomplete="off" id="time_taken" name="time_taken" type="text" class="form-control"
                                 placeholder="Enter time taken">
                         </div>
                         <button type="submit" class="btn btn-outline-primary">Submit</button>
@@ -167,7 +167,7 @@
                                             <form action="/employee/updateTask" method="post">
                                                 <div class="form-group">
                                                     <label>Task Description:</label>
-                                                    <input type="text" class="form-control" id="udesc<%=j%>"
+                                                    <input autocomplete="off" type="text" class="form-control" id="udesc<%=j%>"
                                                         name="udesc">
                                                 </div>
                                                 <div class="form-group">
@@ -186,7 +186,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Time taken(in mins):</label>
-                                                    <input id="utime_taken<%=j%>" name="utime_taken" type="text"
+                                                    <input autocomplete="off" id="utime_taken<%=j%>" name="utime_taken" type="text"
                                                         class="form-control">
                                                 </div>
                                                 <div style="display: none;" class="form-group">
@@ -312,7 +312,7 @@
                                                         <form action="/employee/updateTask" method="post">
                                                             <div class="form-group">
                                                                 <label>Task Description:</label>
-                                                                <input type="text" class="form-control"
+                                                                <input autocomplete="off"  type="text" class="form-control"
                                                                     id="modalVisiblePrevDesc-<%=i%>" name="newPrevDesc">
                                                             </div>
                                                             <div class="form-group">
@@ -333,15 +333,15 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Time taken(in mins):</label>
-                                                                <input id="modalPrevTime-<%=i%>" name="prevTime"
+                                                                <input autocomplete="off"  id="modalPrevTime-<%=i%>" name="prevTime"
                                                                     type="text" class="form-control">
                                                             </div>
                                                             <div style="display: none;" class="form-group">
-                                                                <input id="modalPrevDate-<%=i%>" name="prevDate"
+                                                                <input  id="modalPrevDate-<%=i%>" name="prevDate"
                                                                     type="text" class="form-control">
                                                             </div>
                                                             <div style="display: none;" class="form-group">
-                                                                <input type="text" class="form-control"
+                                                                <input   type="text" class="form-control"
                                                                     id="modalOldPrevSt_time-<%=i%>"
                                                                     name="oldPrevSt_time">
                                                             </div>
