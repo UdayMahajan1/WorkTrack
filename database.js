@@ -67,7 +67,9 @@ const getEmployeeTasks = async (date, username) => {
     }
 }
 
-const setEmployeeTasks = async ({ username, desc, type, time_taken, st_time, date }) => {
+const setEmployeeTasks = async ({ taskData }) => {
+
+    let { desc, type, date, st_time, time_taken, username } = taskData
 
     try {
         const [department] = await pool.execute('SELECT dept FROM employee_info WHERE username = ?', [username])
